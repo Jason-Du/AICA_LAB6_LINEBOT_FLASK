@@ -28,23 +28,22 @@ def callback():
             user_id = f.read()
         f.close()
         sensor_signal = request.args.get(key='SENSOR')
-        predict_signal = request.args.get(key="RESULT")##此處程式碼為辨識影像結果
-        print(predict_signal)
+        # predict_signal = request.args.get(key="RESULT")##此處程式碼為辨識影像結果
         if (sensor_signal=="ON"):
             # line_bot_api.broadcast(TextSendMessage(text='SENSOR IS ON SIGNAL'))#廣播通知全部人
             # line_bot_api.broadcast(TextSendMessage(text='This is a broadcast message'))#廣播通知全部人
             line_bot_api.push_message(user_id, TextSendMessage(text='Message from Desktop send to specific id'))#向特定人傳送訊息
 ################################# 此處程式碼為辨識影像結果
-        if (predict_signal == "0 khduh"):
-            line_bot_api.push_message(user_id, TextSendMessage(text='Welcome home'))
-        elif (predict_signal == "1 mask"):
-            line_bot_api.push_message(user_id, TextSendMessage(text='Warning'))
-            line_bot_api.push_message(user_id,
-                                      ImageSendMessage(original_content_url="https://80e54e6189c5.ngrok.io/photo_page",
-                                                       preview_image_url="https://80e54e6189c5.ngrok.io/photo_page"))
-        else:
-            line_bot_api.push_message(user_id, TextSendMessage(text='No predicting'))
-            pass
+        # if (predict_signal == "0 khduh"):
+        #     line_bot_api.push_message(user_id, TextSendMessage(text='Welcome home'))
+        # elif (predict_signal == "1 mask"):
+        #     line_bot_api.push_message(user_id, TextSendMessage(text='Warning'))
+        #     line_bot_api.push_message(user_id,
+        #                               ImageSendMessage(original_content_url="https://80e54e6189c5.ngrok.io/photo_page",
+        #                                                preview_image_url="https://80e54e6189c5.ngrok.io/photo_page"))
+        # else:
+        #     line_bot_api.push_message(user_id, TextSendMessage(text='No predicting'))
+        #     pass
 #################################此處程式碼為辨識影像結果
 
         return "OK"
@@ -53,17 +52,12 @@ def callback():
 
         body = request.get_data(as_text=True)
         app.logger.info("Request body: " + body)
-
         try:
             print(body, signature)
             handler.handle(body, signature)
-
         except InvalidSignatureError:
             abort(400)
-
         return 'OK'
-
-
 # 學你說話
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
