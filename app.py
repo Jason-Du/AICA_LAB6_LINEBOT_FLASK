@@ -32,13 +32,13 @@ def callback():
             line_bot_api.broadcast(TextSendMessage(text='SENSOR IS ON SIGNAL'))#廣播通知全部人
             line_bot_api.broadcast(TextSendMessage(text='This is a broadcast message'))#廣播通知全部人
             line_bot_api.push_message(user_id, TextSendMessage(text='Message from Desktop send to specific id'))#向特定人傳送訊息
-            line_bot_api.push_message(user_id,
+            line_bot_api.push_message(user_id,#向特定人傳送訊息
                                       ImageSendMessage(original_content_url="https://c8fae789e773.ngrok.io/photo_page#",
                                                        preview_image_url="https://c8fae789e773.ngrok.io/photo_page#"))#圖片網址後面請加上一個#符號
 
         return "OK"
     elif request.method == 'POST':
-        signature = request.headers['X-Line-Signature']
+        signature = request.headers['X-Line-Signature'] # LINE 憑證驗證
 
         body = request.get_data(as_text=True)
         app.logger.info("Request body: " + body)
@@ -59,7 +59,7 @@ def handle_message(event):
         with open('id.txt', 'w') as f:
             f.write(str(var_id))
             f.close()
-    elif (event.message.text == "photo"):
+    elif (event.message.text == "photo"):#下自訂義指令叫樹梅派拍照
         pass
         data = {
             "name": "Jason",
